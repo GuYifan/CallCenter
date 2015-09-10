@@ -7,45 +7,66 @@ import org.yifan.interview.employee.CallHandler;
 import org.yifan.interview.employee.Supervisor;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Stack;
 
 /**
- * Dispatcher
+ * Dispatcher represents call dispatcher.
+ * 
  * @author Yifan Gu
  */
 public class Dispatcher {
 
-    private ArrayList<Employee> employees = new ArrayList<Employee>();
-    private Supervisor supervisor;
-    private Manager manager;
+	private ArrayList<Employee> employees = new ArrayList<Employee>();
+	private Supervisor supervisor;
+	private Manager manager;
 
-    public Dispatcher(ArrayList<Employee> employees, Supervisor supervisor, Manager manager) {
-        this.employees.addAll(employees);
-        this.supervisor = supervisor;
-        this.manager = manager;
-    }
+	/**
+	 * Constructor for Dispatcher.
+	 * 
+	 * @param employees
+	 *            list of employees at the call center
+	 * @param supervisor
+	 *            the supervisor at the call center
+	 * @param manager
+	 *            the manager at the call center
+	 */
+	public Dispatcher(ArrayList<Employee> employees, Supervisor supervisor,
+			Manager manager) {
+		this.employees.addAll(employees);
+		this.supervisor = supervisor;
+		this.manager = manager;
+	}
 
-    public CallHandler findCallHandler(Call call) {
-        CallHandler firstResponder = findAvailableEmployeeHandler(call);
-        while(firstResponder == null) {
-        	firstResponder = findAvailableEmployeeHandler(call);
-        }
+	/**
+	 * Find a available employee and assign the incoming call to him.
+	 * 
+	 * @param call
+	 *            incoming call
+	 */
+	public void findCallHandler(Call call) {
+		CallHandler firstResponder = findAvailableEmployeeHandler(call);
+		while (firstResponder == null) {
+			firstResponder = findAvailableEmployeeHandler(call);
+		}
 
-        CallHandler finalResponder = firstResponder.answerCall(call);
+		firstResponder.handleCall(call);
+	}
 
-        return finalResponder;
-    }
-
-    private Employee findAvailableEmployeeHandler(Call call) {
-        Employee ret = null;
-        for(Employee e : employees) {
-            if(e.isAvailable()) {
-                ret = e;
-                break;
-            }
-        }
-        return ret;
-    }
+	/**
+	 * Find an available employee from the employees array. If no employee is
+	 * available, returns null.
+	 * 
+	 * @param call
+	 *            incoming call
+	 */
+	private Employee findAvailableEmployeeHandler(Call call) {
+		Employee ret = null;
+		for (Employee e : employees) {
+			if (e.isAvailable()) {
+				ret = e;
+				break;
+			}
+		}
+		return ret;
+	}
 
 }

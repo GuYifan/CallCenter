@@ -4,7 +4,6 @@ import org.yifan.interview.call.Call;
 import org.yifan.interview.dispatcher.Dispatcher;
 import org.yifan.interview.employee.Employee;
 import org.yifan.interview.employee.Manager;
-import org.yifan.interview.employee.CallHandler;
 import org.yifan.interview.employee.Supervisor;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class App
         ArrayList<Call> calls = new ArrayList<Call>();
         calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 15));
         calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 18));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 1));
+        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 2));
         calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
         calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
         calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 2));
@@ -42,40 +41,16 @@ public class App
         calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 13));
         calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 6));
         calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 3));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 15));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 18));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 1));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 5));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 13));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 6));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 3));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 15));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 18));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 1));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 5));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 13));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 6));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 3));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 15));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 18));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 1));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.HARD_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.MEDIUM_LEVEL, 2));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 5));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 13));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 6));
-        calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 3));
-
+        
         for (Call c : calls) {
-            CallHandler handler = dispatcher.findCallHandler(c);
-            System.out.println(handler.role.toString() + " " + handler.id + " is answering the call.");
+            dispatcher.findCallHandler(c);
+        }
+        
+        supervisor.handlingRemainingCalls();
+        manager.handleRemainingCalls();
+        
+        for (Call c : calls) {
+            System.out.println("This call is assigned to " + c.getAssignee().role.toString() + " " + c.getAssignee().id);
         }
 
     }
