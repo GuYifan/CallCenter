@@ -28,7 +28,7 @@ public class Call {
 
 	public final DifficultyLevel difficultyLevel;
 	private CallHandler assignee;
-	// expected length of this call
+	// expected length of this call (in seconds)
 	private long length;
 	// the time stamp when this call is answered
 	private long answeredTime;
@@ -40,7 +40,7 @@ public class Call {
 	 * @param difficultyLevel
 	 *            difficulty level
 	 * @param length
-	 *            expected length of the call
+	 *            expected length of the call in seconds
 	 */
 	public Call(DifficultyLevel difficultyLevel, long length) {
 		this.difficultyLevel = difficultyLevel;

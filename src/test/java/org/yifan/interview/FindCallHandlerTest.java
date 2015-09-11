@@ -1,22 +1,24 @@
 package org.yifan.interview;
 
+import java.util.*;
+
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.yifan.interview.call.Call;
 import org.yifan.interview.dispatcher.Dispatcher;
 import org.yifan.interview.employee.Employee;
 import org.yifan.interview.employee.Manager;
 import org.yifan.interview.employee.Supervisor;
 
-import java.util.ArrayList;
-
 /**
- * Main program for call center. It's a demo that creates 3 employees, 1
- * supervisor and 1 manager. There is 10 calls and it demonstrates how
- * findCallHandler method in Dispatcher class works.
+ * Unit test for findCallHandler method in Dispatcher.
  * 
  * @author Yifan Gu
  */
-public class App {
-	public static void main(String[] args) {
+public class FindCallHandlerTest {
+
+	@Test
+	public void testFindCallHandler() {
 		// Initialize 1 manager, 1 supervisor and 3 employees
 		Manager manager = Manager.getMangaer(0);
 		Supervisor supervisor = Supervisor.getSupervisor(1, manager);
@@ -30,7 +32,7 @@ public class App {
 		// Initialize dispatcher
 		Dispatcher dispatcher = new Dispatcher(employees, supervisor, manager);
 
-		// Create a list of calls
+		// Create a list of calls. Length of time is in seconds.
 		ArrayList<Call> calls = new ArrayList<Call>();
 		calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 15));
 		calls.add(new Call(Call.DifficultyLevel.EASY_LEVEL, 17));
@@ -52,14 +54,19 @@ public class App {
 		// it needs to clean up queued calls by answering all queued calls
 		supervisor.handlingRemainingCalls();
 		manager.handleRemainingCalls();
+		
+		// Expected results which is the order of call handler that should 
+		// answer the corresponding call
+		int[] expectedResults = {2, 3, 1, 0, 0, 1, 4, 4, 2, 3};
 
 		// expected results of callhandlers should be 2, 3, 1, 0, 0, 1, 4, 4, 2, 3 for 
 		// the first call to the last
 		for (Call c : calls) {
-			System.out.println("This call is assigned to "
-					+ c.getAssignee().role.toString() + " "
-					+ c.getAssignee().id);
+			int idx = calls.indexOf(c);
+			assertTrue("Call # " + idx + " should be " +
+					"answered by " + expectedResults[idx] + 
+					" but actually anwsered by " + c.getAssignee().id,
+					c.getAssignee().id == expectedResults[idx]);
 		}
-
 	}
 }
